@@ -28,7 +28,6 @@ class BankAccountKataTest {
     companion object {
         const val AMOUNT_OF_100 = 100
         const val AMOUNT_OF_20 = 20
-        const val AMOUNT_OF_minus_20 = -20
         
         lateinit var bankAccount: BankAccount
     }
@@ -43,9 +42,8 @@ class BankAccountKataTest {
 
         assertEquals(bankAccount.accountStatements.size, 1)
 
-        assertEqualsStatements(bankAccount.accountStatements, AMOUNT_OF_100, AMOUNT_OF_100, DEPOSIT)
+        assertEqualsStatements(bankAccount.accountStatements, AMOUNT_OF_100, DEPOSIT)
 
-        assertEquals(bankAccount.amount, AMOUNT_OF_100)
     }
 
     @Test fun shouldAddAWithDrawalOf20(){
@@ -54,9 +52,8 @@ class BankAccountKataTest {
 
         assertEquals(bankAccount.accountStatements.size, 1)
 
-        assertEqualsStatements(bankAccount.accountStatements, AMOUNT_OF_minus_20, AMOUNT_OF_20, WITHDRAWAL)
+        assertEqualsStatements(bankAccount.accountStatements, AMOUNT_OF_20, WITHDRAWAL)
 
-        assertEquals(bankAccount.amount, AMOUNT_OF_minus_20)
     }
 
     @Test fun historyOfOperationsShouldBeVisible(){
@@ -68,9 +65,8 @@ class BankAccountKataTest {
 
     }
 
-    private fun assertEqualsStatements(accountStatements: List<Operation>, amountExpected: Int, balanceExpected: Int, nameOfOperation: String) {
+    private fun assertEqualsStatements(accountStatements: List<Operation>, amountExpected: Int, nameOfOperation: String) {
         assertEquals(accountStatements.first().amount, amountExpected)
-        assertEquals(accountStatements.first().balance, balanceExpected)
         assertEquals(accountStatements.first().name, nameOfOperation)
     }
 }

@@ -1,6 +1,7 @@
 package goupil
 
 import java.util.Date
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.collections.ArrayList
 
 /**
@@ -14,28 +15,35 @@ class BankAccount {
     companion object {
         const val DEPOSIT = "deposit"
         const val WITHDRAWAL = "withDrawal"
+        const val HEADER_OPERATION = "name | date | amount | balance"
     }
 
-    var amount: Int = 0
+    var runningBalance: AtomicInteger = AtomicInteger(0)
     var accountStatements: List<Operation> = ArrayList()
 
-    fun makeDeposit(deposit: Int): Int {
-          this.amount += deposit
-          this.accountStatements = this.accountStatements.plusElement(Operation(DEPOSIT, Date(), this.amount, deposit))
-        return this.amount
+    fun makeDeposit(deposit: Int) {
+          this.accountStatements = this.accountStatements.plusElement(Operation(DEPOSIT, Date().toString(), deposit))
     }
 
-    fun makeWithDrawal(withDrawal: Int): Int {
-          this.amount -= withDrawal
-            this.accountStatements = this.accountStatements.plusElement(Operation(WITHDRAWAL, Date(), this.amount, withDrawal))
-        return this.amount
+    fun makeWithDrawal(withDrawal: Int) {
+            this.accountStatements = this.accountStatements.plusElement(Operation(WITHDRAWAL, Date().toString(), withDrawal))
     }
 
-    fun showHistoryOfOperations(): Boolean {
-        println("statement: name - date - amount - balance")
-        for(statement in accountStatements)
-            println("statement: ${statement.name} - ${statement.date} - ${statement.amount} - ${statement.balance}")
+    fun showHistoryOfOperations() {
+        println(HEADER_OPERATION)
+        accountStatements.iterator().forEach {
+            statement -> println(statementLine(statement, runningBalance))
+        }
+    }
 
-        return true
+    fun statementLine(statement: Operation, runningBalance: AtomicInteger): String  {
+        return statement.name
+                .plus(" | ")
+                .plus(statement.date)
+                .plus(" | ")
+                .plus(statement.amount)
+                .plus(" | ")
+                .plus(runningBalance.addAndGet(statement.amount))
+        
     }
 }
