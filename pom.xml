@@ -3,12 +3,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>test</groupId>
-    <artifactId>test</artifactId>
+    <groupId>goupil</groupId>
+    <artifactId>goupil</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>test test</name>
+    <name>goupil goupil</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,8 +37,8 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+        <sourceDirectory>src/main/fr</sourceDirectory>
+        <testSourceDirectory>src/test/fr</testSourceDirectory>
 
         <plugins>
             <plugin>
@@ -54,7 +54,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>test-compile</id>
+                        <id>goupil-compile</id>
                         <phase>test-compile</phase>
                         <goals>
                             <goal>test-compile</goal>

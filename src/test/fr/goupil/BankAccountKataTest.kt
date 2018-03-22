@@ -1,4 +1,4 @@
-package test
+package goupil
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -37,11 +37,10 @@ class BankAccountKataTest {
         // In order to check my operations As a bank client I want to see the history (operation, date, amount, balance) of my operations
         var bankAccount = BankAccount(100)
 
-        bankAccount.makeWithDrawal(20)
         bankAccount.makeDeposit(100)
         bankAccount.makeWithDrawal(100)
 
-        assertEquals(bankAccount.accountStatements.size, 3)
+        assertEquals(bankAccount.accountStatements.size, 2)
 
     }
 }

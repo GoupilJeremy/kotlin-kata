@@ -1,4 +1,4 @@
-package test
+package goupil
 
 import java.util.*
 
@@ -9,8 +9,8 @@ import java.util.*
  * Account statement (date, amount, balance)
  * Statement printing
  */
-class BankAccount(i: Int = 0) {
-   var amount: Int = i
+class BankAccount(initialAmount: Int = 0) {
+   var amount: Int = initialAmount
    var deposit: Int = 0
    var withDrawal: Int  = 0
     var accountStatements: MutableList<Operation> = mutableListOf()

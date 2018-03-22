@@ -1,4 +1,4 @@
-package test
+package goupil
 
 import java.util.*
 
@@ -6,6 +6,6 @@ class Operation(name: String, date: Date, amount: Int, balance: Int) {
     var name: String = name
     var date: Date = date
     var amount: Int = amount
-    var balance: Int = 0
+    var balance: Int = balance
 
 }
