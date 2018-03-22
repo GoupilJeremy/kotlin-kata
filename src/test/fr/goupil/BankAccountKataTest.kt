@@ -1,5 +1,8 @@
 package goupil
 
+import goupil.BankAccount.Companion.DEPOSIT
+import goupil.BankAccount.Companion.WITHDRAWAL
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -9,39 +12,66 @@ import kotlin.test.assertEquals
  * Deposit and Withdrawal
  * Account statement (date, amount, balance)
  * Statement printing
+ *
+ * US1:
+ * - In order to save money As a bank client I want to make a deposit in my account
+ *
+ * US2:
+ * - In order to retrieve some or all of my savings As a bank client I want to make a withdrawal from my account
+ *
+ * US3:
+ * - In order to check my operations As a bank client I want to see the history (operation, date, amount, balance) of my operations
  */
 
 class BankAccountKataTest {
 
-    @Test fun amountOf50ShouldBe150AfterADepositOf100(){
-        // In order to save money As a bank client I want to make a deposit in my account
-        var bankAccount = BankAccount(50)
-
-        bankAccount.makeDeposit(100)
-
-        assertEquals(bankAccount.deposit, 100)
-        assertEquals(bankAccount.amount, 150)
+    companion object {
+        const val AMOUNT_OF_100 = 100
+        const val AMOUNT_OF_20 = 20
+        const val AMOUNT_OF_minus_20 = -20
+        
+        lateinit var bankAccount: BankAccount
     }
 
-    @Test fun amountOf100ShouldBe80AfterAWithDrawalOf20(){
-        // In order to retrieve some or all of my savings As a bank client I want to make a withdrawal from my account
-        var bankAccount = BankAccount(100)
+    @Before fun prepareTest() {
+        bankAccount = BankAccount()
+    }
 
-        bankAccount.makeWithDrawal(20)
+    @Test fun ShouldAddAdepositDepositOf100(){
 
-        assertEquals(bankAccount.withDrawal, 20)
-        assertEquals(bankAccount.amount, 80)
+        bankAccount.makeDeposit(AMOUNT_OF_100)
+
+        assertEquals(bankAccount.accountStatements.size, 1)
+
+        assertEqualsStatements(bankAccount.accountStatements, AMOUNT_OF_100, AMOUNT_OF_100, DEPOSIT)
+
+        assertEquals(bankAccount.amount, AMOUNT_OF_100)
+    }
+
+    @Test fun shouldAddAWithDrawalOf20(){
+
+        bankAccount.makeWithDrawal(AMOUNT_OF_20)
+
+        assertEquals(bankAccount.accountStatements.size, 1)
+
+        assertEqualsStatements(bankAccount.accountStatements, AMOUNT_OF_minus_20, AMOUNT_OF_20, WITHDRAWAL)
+
+        assertEquals(bankAccount.amount, AMOUNT_OF_minus_20)
     }
 
     @Test fun historyOfOperationsShouldBeVisible(){
-        // In order to check my operations As a bank client I want to see the history (operation, date, amount, balance) of my operations
-        var bankAccount = BankAccount(100)
 
-        bankAccount.makeDeposit(100)
-        bankAccount.makeWithDrawal(100)
+        bankAccount.makeDeposit(AMOUNT_OF_100)
+        bankAccount.makeWithDrawal(AMOUNT_OF_100)
 
         assertEquals(bankAccount.accountStatements.size, 2)
 
+    }
+
+    private fun assertEqualsStatements(accountStatements: List<Operation>, amountExpected: Int, balanceExpected: Int, nameOfOperation: String) {
+        assertEquals(accountStatements.first().amount, amountExpected)
+        assertEquals(accountStatements.first().balance, balanceExpected)
+        assertEquals(accountStatements.first().name, nameOfOperation)
     }
 }
 

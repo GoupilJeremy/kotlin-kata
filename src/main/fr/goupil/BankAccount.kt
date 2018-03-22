@@ -1,6 +1,7 @@
 package goupil
 
-import java.util.*
+import java.util.Date
+import kotlin.collections.ArrayList
 
 /**
  * Bank account kata
@@ -9,23 +10,24 @@ import java.util.*
  * Account statement (date, amount, balance)
  * Statement printing
  */
-class BankAccount(initialAmount: Int = 0) {
-   var amount: Int = initialAmount
-   var deposit: Int = 0
-   var withDrawal: Int  = 0
-    var accountStatements: MutableList<Operation> = mutableListOf()
+class BankAccount {
+    companion object {
+        const val DEPOSIT = "deposit"
+        const val WITHDRAWAL = "withDrawal"
+    }
+
+    var amount: Int = 0
+    var accountStatements: List<Operation> = ArrayList()
 
     fun makeDeposit(deposit: Int): Int {
-          this.deposit = deposit
           this.amount += deposit
-          this.accountStatements.add(Operation("deposit", Date(), this.amount, this.deposit))
+          this.accountStatements = this.accountStatements.plusElement(Operation(DEPOSIT, Date(), this.amount, deposit))
         return this.amount
     }
 
     fun makeWithDrawal(withDrawal: Int): Int {
-          this.withDrawal = withDrawal
           this.amount -= withDrawal
-          this.accountStatements.add(Operation("withDrawal", Date(), this.amount, this.withDrawal))
+            this.accountStatements = this.accountStatements.plusElement(Operation(WITHDRAWAL, Date(), this.amount, withDrawal))
         return this.amount
     }
 
@@ -36,17 +38,4 @@ class BankAccount(initialAmount: Int = 0) {
 
         return true
     }
-}
-
-
-fun main(args: Array<String>) {
-    val bankAccount = BankAccount()
-    println("bankAccount amount: ${bankAccount.amount}")
-    bankAccount.makeDeposit(500)
-    println("bankAccount amount after a deposit: ${bankAccount.amount}")
-    bankAccount.makeWithDrawal(50)
-    println("bankAccount amount after a withDrawal: ${bankAccount.amount}")
-
-    bankAccount.showHistoryOfOperations()
-
 }

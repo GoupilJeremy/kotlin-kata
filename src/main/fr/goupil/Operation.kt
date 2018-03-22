@@ -1,6 +1,6 @@
 package goupil
 
-import java.util.*
+import java.util.Date
 
 class Operation(name: String, date: Date, amount: Int, balance: Int) {
     var name: String = name
